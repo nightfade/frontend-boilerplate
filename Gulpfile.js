@@ -2,17 +2,20 @@ var gulp = require('gulp');
 var shell = require('gulp-shell');
 var clean = require('gulp-clean');
 
+var bootstrapSrc = 'bootstrap-src'
+var bootstrapDest = 'www/bootstrap'
+
 gulp.task('clean-bootstrap', function() {
-    return gulp.src('bootstrap', {read: false})
+    return gulp.src(bootstrapDest, {read: false})
                .pipe(clean());
 });
 
 gulp.task('compile-bootstrap', ['clean-bootstrap'], function() {
-    shell.task(['cd "bootstrap-src";grunt dist'])
+    shell.task([`cd "${bootstrapSrc}";grunt dist`])
 });
 
 gulp.task('bootstrap', ['compile-bootstrap'], function() {
-    return gulp.src('bootstrap-src/dist/**/*').pipe(gulp.dest('bootstrap'));
+    return gulp.src(`${bootstrapSrc}/dist/**/*`).pipe(gulp.dest(bootstrapDest));
 });
 
 gulp.task('all', ['bootstrap'])
