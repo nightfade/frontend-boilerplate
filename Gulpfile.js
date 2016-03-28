@@ -1,17 +1,18 @@
-var gulp = require('gulp')
-var shell = require('gulp-shell')
+var gulp = require('gulp');
+var shell = require('gulp-shell');
+var clean = require('gulp-clean');
 
-gulp.task('compile-bootstrap', function() {
-    shell.task(['cd "bootstrap";grunt dist'])
+gulp.task('clean-bootstrap', function() {
+    return gulp.src('bootstrap', {read: false})
+               .pipe(clean());
+});
+
+gulp.task('compile-bootstrap', ['clean-bootstrap'], function() {
+    shell.task(['cd "bootstrap-src";grunt dist'])
 });
 
 gulp.task('bootstrap', ['compile-bootstrap'], function() {
-    var srcToDest = {'bootstrap/dist/css/*': 'css',
-                     'bootstrap/dist/fonts/*': 'fonts',
-                     'bootstrap/dist/js/*': 'js'};
-    for (var src in srcToDest) {
-        gulp.src(src).pipe(gulp.dest(srcToDest[src]));
-    }
-})
+    return gulp.src('bootstrap-src/dist/**/*').pipe(gulp.dest('bootstrap'));
+});
 
 gulp.task('all', ['bootstrap'])
