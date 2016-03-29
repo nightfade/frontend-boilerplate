@@ -2,12 +2,12 @@ var gulp = require('gulp');
 var shell = require('gulp-shell');
 var clean = require('gulp-clean');
 
-var bootstrapSrc = 'bootstrap-src'
-var bootstrapDest = 'www/bootstrap'
+var bootstrapSrc = 'bootstrap'
+var bootstrapDest = '../www/bootstrap'
 
 gulp.task('clean-bootstrap', function() {
     return gulp.src(bootstrapDest, {read: false})
-               .pipe(clean());
+               .pipe(clean({force: true}));
 });
 
 gulp.task('compile-bootstrap', ['clean-bootstrap'], function() {
